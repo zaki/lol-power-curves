@@ -1,11 +1,23 @@
 $(document).ready(function() {
   window.champions = [];
-  var properties = ["hp", "hpp", "hp5", "hp5p", "mp", "mpp", "mp5", "mp5p", "ad", "adp", "as", "asp", "ar", "arp", "mr", "mrp", "ms", "range"];
-  var charts = ["ad", "hp", "mp", "ar", "hp5", "mp5"];
+
+  var properties = [
+       "attackdamage", "attackdamageperlevel",
+       "attackspeed", "attackspeedperlevel",
+       "mpperlevel", "mp", "mpregen", "mpregenperlevel",
+       "hp", "hpperlevel","hpregen", "hpregenperlevel",
+       "armor", "armorperlevel",
+       "spellblockperlevel", "spellblock",
+       "attackrange",
+       "movespeed"];
+
+  var charts = ["attackdamage", "hp", "mp", "armor", "hpregen", "mpregen", "attackspeed", "dps"];
 
   function updateChampion(idx) {
     var i;
     var name = $("#champion"+ idx +" option:selected").val();
+    if (typeof(name) === "undefined" || name === "") { return; }
+
     $.getJSON("/champion", { "name": name }, function(champion, status, jqXHR) {
       window.champions[idx] = champion;
       for (i in properties)
@@ -14,18 +26,34 @@ $(document).ready(function() {
       }
       if (idx === 2)
       {
+        updateClasses();
         updateCharts();
       }
     });
   }
 
+  function updateClasses()
+  {
+      for (i in properties)
+      {
+        $("#prop_" + properties[i]).removeClass();
+
+        if (window.champions[1][properties[i]] > window.champions[2][properties[i]])
+        {
+          $("#prop_" + properties[i]).addClass("champion1");
+        }
+        else if (window.champions[1][properties[i]] < window.champions[2][properties[i]])
+        {
+          $("#prop_" + properties[i]).addClass("champion2");
+        }
+      }
+  }
+
   function onChange()
   {
     var i;
-    for (i = 1; i < 3; i++)
-    {
-      updateChampion(i);
-    }
+    updateChampion(1);
+    updateChampion(2);
   }
 
   function updateCharts()
@@ -39,8 +67,30 @@ $(document).ready(function() {
 
       for (i = 0; i < 18; i++)
       {
-        data1.push(parseFloat(window.champions[1][chart]) + i * parseFloat(window.champions[1][chart+"p"]));
-        data2.push(parseFloat(window.champions[2][chart]) + i * parseFloat(window.champions[2][chart+"p"]));
+        if (chart === "attackspeed")
+        {
+          var as1 = window.champions[1]["attackspeed"] + Math.pow((100 + window.champions[1]["attackspeedperlevel"])/100, i);
+          var as2 = window.champions[2]["attackspeed"] + Math.pow((100 + window.champions[2]["attackspeedperlevel"])/100, i);
+
+          data1.push(as1);
+          data2.push(as2);
+        }
+        else if (chart === "dps")
+        {
+          var ad1 = window.champions[1]["attackdamage"] + i * window.champions[1]["attackdamageperlevel"];
+          var ad2 = window.champions[2]["attackdamage"] + i * window.champions[2]["attackdamageperlevel"];
+
+          var as1 = window.champions[1]["attackspeed"] + Math.pow((100 + window.champions[1]["attackspeedperlevel"])/100, i);
+          var as2 = window.champions[2]["attackspeed"] + Math.pow((100 + window.champions[2]["attackspeedperlevel"])/100, i);
+
+          data1.push(ad1 * as1);
+          data2.push(ad2 * as2);
+        }
+        else
+        {
+          data1.push(window.champions[1][chart] + i * window.champions[1][chart+"perlevel"]);
+          data2.push(window.champions[2][chart] + i * window.champions[2][chart+"perlevel"]);
+        }
       }
       new Chart(ctx).Line(
           {

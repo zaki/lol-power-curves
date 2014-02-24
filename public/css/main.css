@@ -1,2 +1,7 @@
 .red  { color: rgba(255, 0, 0, 0.7); }
 .blue { color: rgba(0, 0, 255, 0.7); }
+
+.perlevel { color: rgba(0, 0, 0, 0.4); }
+
+.champion1 > th { color: red;  background-color: rgba(255, 0, 0, 0.3); }
+.champion2 > th { color: blue; background-color: rgba(0, 0, 255, 0.3); }

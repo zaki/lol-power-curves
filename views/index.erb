@@ -35,7 +35,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6">
-          <table class="table table-striped table-bordered">
+          <table class="table table-bordered">
             <thead>
               <tr>
                 <th></th>
@@ -54,7 +54,7 @@
                     <% end %>
                   </select>
                 </td>
-                <td>vs.</td>
+                <td></td>
                 <td>
                   <select class="form-control" id="champion2">
                     <% @champions.each do |champion| %>
@@ -63,44 +63,40 @@
                   </select>
                 </td>
               </tr>
-              <% %w(hp hpp hp5 hp5p mp mpp mp5 mp5p ad adp as asp ar arp mr mrp ms range).each do |property| %>
-              <tr>
-                <th><%= property.upcase %></th>
-                <td id="champion1_<%=property%>"></td>
+              <% @properties.each do |property| %>
+              <tr id="prop_<%=property[0]%>">
+                <th><%= property[1] %></th>
+                <td>
+                  <span id="champion1_<%=property[0]%>"></span>
+                  <% if property[2] %>
+                    <span class="perlevel">(+<span id="champion1_<%=property[0]%>perlevel"></span>)</span>
+                  <% end %>
+                </td>
                 <td></td>
-                <td id="champion2_<%=property%>"></td>
+                <td>
+                  <span id="champion2_<%=property[0]%>"></span>
+                  <% if property[2] %>
+                    <span class="perlevel">(+<span id="champion2_<%=property[0]%>perlevel"></span>)</span>
+                  <% end %>
+                </td>
               </tr>
               <% end %>
             </tbody>
           </table>
         </div>
         <div class="col-md-6">
+          <% @charts.each do |(attribute, name)| %>
           <div class="row">
-            <h3>AD</h3>
-            <canvas id="ad" width="500" height="300"></canvas>
+            <h3><%=name%></h3>
+            <canvas id="<%=attribute%>" width="500" height="200"></canvas>
           </div>
-          <div class="row">
-            <h3>HP</h3>
-            <canvas id="hp" width="500" height="300"></canvas>
-          </div>
-          <div class="row">
-            <h3>MP</h3>
-            <canvas id="mp" width="500" height="300"></canvas>
-          </div>
-          <div class="row">
-            <h3>HP Regen</h3>
-            <canvas id="hp5" width="500" height="300"></canvas>
-          </div>
-          <div class="row">
-            <h3>MP Regen</h3>
-            <canvas id="mp5" width="500" height="300"></canvas>
-          </div>
-          <div class="row">
-            <h3>Armor</h3>
-            <canvas id="ar" width="500" height="300"></canvas>
-          </div>
+          <% end %>
         </div>
       </div>
+      <div class="footer">
+        <p>&copy; Friday Inc. <%= Time.now.year %> Data Patch Version: <%= @patch %></p>
+      </div>
+
     </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>

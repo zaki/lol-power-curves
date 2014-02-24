@@ -1,21 +1,32 @@
-require 'csv'
+require 'json'
 
 class Seed
   def self.load
     seed_root = File.dirname(__FILE__)
 
-    seed_file = File.join(seed_root, "champions.csv")
-    champions = CSV.read(seed_file, headers: true)
+    seed_file = File.join(seed_root, "champions.json")
+    champions = JSON.parse(File.read(seed_file))
 
-    champions.each do |champion_data|
-      champion = Champion.first_or_create(name: champion_data["name"])
+    champions["data"].keys.each do |name|
+      champion = Champion.first_or_create(name: name)
+      data     = champions["data"][name]
 
-      %w(hp hpp hp5 hp5p mp mpp mp5 mp5p ad adp as asp ar arp mr mrp ms range).each do |property|
-        champion.send(:"#{property}=", champion_data[property].to_f)
+      ["attackdamage", "attackdamageperlevel",
+       "attackspeedperlevel",
+       "mpperlevel", "mp", "mpregen", "mpregenperlevel",
+       "hp", "hpperlevel","hpregen", "hpregenperlevel",
+       "armor", "armorperlevel",
+       "spellblockperlevel", "spellblock",
+       "attackrange",
+       "movespeed",].each do |property|
+        champion.send(:"#{property}=", data["stats"][property].to_f)
       end
+      champion.attackspeed = (0.625 / (1 - data["stats"]["attackspeedoffset"].to_f)).round(2)
 
       champion.save
     end
+
+    champions["version"]
   end
 end
 

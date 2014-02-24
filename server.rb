@@ -9,24 +9,24 @@ class Champion
 
   property :name,  String, key: true
 
-  property :hp,    Float
-  property :hpp,   Float
-  property :hp5,   Float
-  property :hp5p,  Float
-  property :mp,    Float
-  property :mpp,   Float
-  property :mp5,   Float
-  property :mp5p,  Float
-  property :ad,    Float
-  property :adp,   Float
-  property :as,    Float
-  property :asp,   Float
-  property :ar,    Float
-  property :arp,   Float
-  property :mr,    Float
-  property :mrp,   Float
-  property :ms,    Float
-  property :range, Float
+  property :attackdamage         , Float
+  property :attackdamageperlevel , Float
+  property :attackspeed          , Float
+  property :attackspeedperlevel  , Float
+  property :mp                   , Float
+  property :mpperlevel           , Float
+  property :mpregen              , Float
+  property :mpregenperlevel      , Float
+  property :hp                   , Float
+  property :hpperlevel           , Float
+  property :hpregen              , Float
+  property :hpregenperlevel      , Float
+  property :armor                , Float
+  property :armorperlevel        , Float
+  property :spellblock           , Float
+  property :spellblockperlevel   , Float
+  property :attackrange          , Float
+  property :movespeed            , Float
 end
 #}}}
 
@@ -37,12 +37,38 @@ configure do
   Champion.auto_migrate!
 
   set :public_folder, File.join(File.dirname(__FILE__), "public")
-  Seed.load
+  patch = Seed.load
+
+  set :patch, patch
 end
 
 #{{{ - Routes
 get "/" do
   @champions = Champion.all
+  @properties = [
+    ["attackdamage"         , "AD", true],
+    ["attackspeed"          , "AS", true],
+    ["mp"                   , "MP", true],
+    ["mpregen"              , "MP5", true],
+    ["hp"                   , "HP", true],
+    ["hpregen"              , "HP5", true],
+    ["armor"                , "ARM", true],
+    ["spellblock"           , "MR", true],
+    ["attackrange"          , "Range", false],
+    ["movespeed"            , "MS", false],
+  ]
+  @charts = [
+    ["attackdamage", "AD"],
+    ["attackspeed", "AS"],
+    ["dps", "DPS"],
+    ["mp", "MP"],
+    ["mpregen", "MP5"],
+    ["hp", "HP"],
+    ["hpregen", "HP5"],
+    ["armor", "ARM"],
+  ]
+
+  @patch = settings.patch
   erb :index
 end
 
