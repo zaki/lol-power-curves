@@ -148,7 +148,7 @@
             "mpperlevel": 55,
             "mp": 250,
             "attackdamage": 52,
-            "hp": 360,
+            "hp": 414,
             "hpperlevel": 86,
             "attackdamageperlevel": 3,
             "armor": 11,
@@ -3164,6 +3164,34 @@
          "name": "Kassadin",
          "key": "38"
       },
+      "Velkoz": {
+         "id": "Velkoz",
+         "title": "the Eye of the Void",
+         "stats": {
+            "attackrange": 525,
+            "mpperlevel": 45,
+            "mp": 250,
+            "attackdamage": 51.66,
+            "hp": 380,
+            "hpperlevel": 76,
+            "attackdamageperlevel": 3.14159265359,
+            "armor": 12,
+            "mpregenperlevel": 0.6,
+            "hpregen": 4.5,
+            "critperlevel": 0,
+            "spellblockperlevel": 0,
+            "mpregen": 7,
+            "attackspeedperlevel": 1.36,
+            "spellblock": 30,
+            "movespeed": 340,
+            "attackspeedoffset": 0,
+            "crit": 0,
+            "hpregenperlevel": 0.55,
+            "armorperlevel": 3.5
+         },
+         "name": "Vel'Koz",
+         "key": "161"
+      },
       "Zyra": {
          "id": "Zyra",
          "title": "Rise of the Thorns",
@@ -3278,5 +3306,5 @@
       }
    },
    "type": "champion",
-   "version": "4.2.6"
+   "version": "4.3.12"
 }
