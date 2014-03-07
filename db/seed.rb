@@ -4,7 +4,7 @@ class Seed
   def self.load
     seed_root = File.dirname(__FILE__)
 
-    seed_file = File.join(seed_root, "champions_full.json")
+    seed_file = File.join(seed_root, "champions.json")
     champions = JSON.parse(File.read(seed_file))
 
     champions["data"].keys.each do |name|
