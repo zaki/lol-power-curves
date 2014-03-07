@@ -21,7 +21,7 @@ class Seed
        "movespeed",].each do |property|
         champion.send(:"#{property}=", data["stats"][property].to_f)
       end
-      champion.attackspeed = (0.625 / (1 - data["stats"]["attackspeedoffset"].to_f)).round(2)
+      champion.attackspeed = (0.625 / (1 + data["stats"]["attackspeedoffset"].to_f)).round(3)
 
       champion.save
     end
