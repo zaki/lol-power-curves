@@ -1,7 +1,8 @@
 $(document).ready(function() {
   window.champions = [];
 
-  var properties = [
+  var baseProperties = [
+       "name",
        "attackdamage", "attackdamageperlevel",
        "attackspeed", "attackspeedperlevel",
        "mpperlevel", "mp", "mpregen", "mpregenperlevel",
@@ -10,6 +11,9 @@ $(document).ready(function() {
        "spellblockperlevel", "spellblock",
        "attackrange",
        "movespeed"];
+  var extendedProperties = [
+       "q_cd", "w_cd", "e_cd", "r_cd"];
+  var allProperties = baseProperties.concat(extendedProperties);
 
   var charts = ["attackdamage", "hp", "mp", "armor", "hpregen", "mpregen", "attackspeed", "dps"];
 
@@ -20,9 +24,9 @@ $(document).ready(function() {
 
     $.getJSON("/champion", { "name": name }, function(champion, status, jqXHR) {
       window.champions[idx] = champion;
-      for (i in properties)
+      for (i in allProperties)
       {
-        $("#champion" + idx + "_" + properties[i]).text(champion[properties[i]]);
+        $("#champion" + idx + "_" + allProperties[i]).text(champion[allProperties[i]]);
       }
       if (idx === 2)
       {
@@ -34,17 +38,17 @@ $(document).ready(function() {
 
   function updateClasses()
   {
-      for (i in properties)
+      for (i in baseProperties)
       {
-        $("#prop_" + properties[i]).removeClass();
+        $("#prop_" + baseProperties[i]).removeClass();
 
-        if (window.champions[1][properties[i]] > window.champions[2][properties[i]])
+        if (window.champions[1][baseProperties[i]] > window.champions[2][baseProperties[i]])
         {
-          $("#prop_" + properties[i]).addClass("champion1");
+          $("#prop_" + baseProperties[i]).addClass("champion1");
         }
-        else if (window.champions[1][properties[i]] < window.champions[2][properties[i]])
+        else if (window.champions[1][baseProperties[i]] < window.champions[2][baseProperties[i]])
         {
-          $("#prop_" + properties[i]).addClass("champion2");
+          $("#prop_" + baseProperties[i]).addClass("champion2");
         }
       }
   }

@@ -27,6 +27,11 @@ class Champion
   property :spellblockperlevel   , Float
   property :attackrange          , Float
   property :movespeed            , Float
+
+  property :q_cd                 , String
+  property :w_cd                 , String
+  property :e_cd                 , String
+  property :r_cd                 , String
 end
 #}}}
 
@@ -46,6 +51,7 @@ end
 get "/" do
   @champions = Champion.all
   @properties = [
+    ["name"                 , "", false],
     ["attackdamage"         , "AD", true],
     ["attackspeed"          , "AS", true],
     ["mp"                   , "MP", true],
@@ -56,6 +62,11 @@ get "/" do
     ["spellblock"           , "MR", true],
     ["attackrange"          , "Range", false],
     ["movespeed"            , "MS", false],
+
+    ["q_cd"                 , "Q CD", false],
+    ["w_cd"                 , "W CD", false],
+    ["e_cd"                 , "E CD", false],
+    ["r_cd"                 , "R CD", false],
   ]
   @charts = [
     ["attackdamage", "AD"],
