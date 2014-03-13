@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 gem "sinatra"
 gem "datamapper"
+gem "coffee-script"
 
 group :development do
   gem "sqlite3"

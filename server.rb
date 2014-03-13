@@ -1,6 +1,7 @@
 require "sinatra"
 require "data_mapper"
 require 'json'
+require 'coffee-script'
 require './db/seed'
 
 #{{{ - Resources
@@ -68,16 +69,12 @@ get "/" do
     ["e_cd"                 , "E CD", false],
     ["r_cd"                 , "R CD", false],
   ]
-  @charts = [
-    ["attackdamage", "AD"],
-    ["attackspeed", "AS"],
-    ["dps", "DPS"],
-    ["mp", "MP"],
-    ["mpregen", "MP5"],
-    ["hp", "HP"],
-    ["hpregen", "HP5"],
-    ["armor", "ARM"],
-  ]
+  @charts = {
+    "AD"  => [ ["attackdamage", "AD"], ["attackspeed", "AS"], ["dps", "DPS"], ],
+    "MP"  => [ ["mp", "MP"], ["mpregen", "MP5"], ],
+    "HP"  => [ ["hp", "HP"], ["hpregen", "HP5"], ],
+    "ARM" => [ ["armor", "ARM"], ]
+  }
 
   @patch = settings.patch
   erb :index
@@ -85,6 +82,10 @@ end
 
 get "/list" do
   Champion.all.map {|champion| champion.name}.join(",")
+end
+
+get "/main.js" do
+  coffee :"main.js"
 end
 
 get "/champion", provides: :json do

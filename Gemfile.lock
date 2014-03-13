@@ -3,6 +3,10 @@ GEM
   specs:
     addressable (2.3.5)
     bcrypt-ruby (3.1.2)
+    coffee-script (2.2.0)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.7.0)
     data_objects (0.10.13)
       addressable (~> 2.1)
     datamapper (1.2.0)
@@ -56,6 +60,7 @@ GEM
       data_objects (= 0.10.13)
     do_sqlite3 (0.10.13)
       data_objects (= 0.10.13)
+    execjs (2.0.2)
     fastercsv (1.5.5)
     json (1.8.1)
     json_pure (1.8.1)
@@ -77,6 +82,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  coffee-script
   datamapper
   dm-postgres-adapter
   dm-sqlite-adapter

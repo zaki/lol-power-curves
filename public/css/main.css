@@ -1,3 +1,7 @@
+body { background: url(/img/random_grey_variations.png); }
+
+.panel { margin-top: 65px; padding-top: 15px; }
+
 .red  { color: rgba(255, 0, 0, 0.7); }
 .blue { color: rgba(0, 0, 255, 0.7); }
 
@@ -5,3 +9,5 @@
 
 .champion1 > th { color: red;  background-color: rgba(255, 0, 0, 0.3); }
 .champion2 > th { color: blue; background-color: rgba(0, 0, 255, 0.3); }
+
+#footer { text-align: center; background-color: white; border-top: 1px solid #777; }
