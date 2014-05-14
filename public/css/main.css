@@ -11,3 +11,14 @@ body { background: url(/img/random_grey_variations.png); }
 .champion2 > th { color: blue; background-color: rgba(0, 0, 255, 0.3); }
 
 #footer { text-align: center; background-color: white; border-top: 1px solid #777; }
+
+.ad { color: rgba(255,  66,  66, 0.7); }
+.ap { color: rgba( 66,  66, 255, 0.7); }
+
+.champion-image { width: 32px; height: 32px; }
+.spell-image { width: 24px; height: 24px; }
+
+#champion1_q_sc, #champion1_w_sc, #champion1_e_sc, #champion1_r_sc,
+#champion2_q_sc, #champion2_w_sc, #champion2_e_sc, #champion2_r_sc {
+  font-size: small; color: rgba(0, 0, 0, 0.5);
+}

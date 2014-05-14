@@ -25,6 +25,11 @@ class Champion
     "w_cd"
     "e_cd"
     "r_cd"
+
+    "q_sc"
+    "w_sc"
+    "e_sc"
+    "r_sc"
   ]
 
   charts = ["ad", "hp", "mp", "arm", "hp5", "mp5", "as", "dps"]
@@ -66,8 +71,9 @@ class Champion
       @ready = true
       this.updateCharts()
 
-  wikiLink: (name) ->
+  wikiLink: (name, image) ->
     "
+    <img class='champion-image' src='/img/champion/#{image}' />
     #{name} wiki 
     <a href='http://leagueoflegends.wikia.com/wiki/#{name}' target='_blank'>EN</a>
     <a href='http://loljp-wiki.tk/wiki/index.php?Champion%2F#{name}' target='_blank'>JA</a>
@@ -75,7 +81,13 @@ class Champion
 
   updateProperty: (property, data, idx) ->
     @[property] = data[property]
-    prop = if property == "name" then this.wikiLink(@[property]) else @[property]
+    prop = switch property
+             when "name"
+               this.wikiLink @[property], data["image"]
+             when "q_cd", "w_cd", "e_cd", "r_cd"
+               "<img class='spell-image' src='/img/spell/#{data[property.replace("cd", "img")]}'/> #{@[property]}"
+             else
+               @[property]
     $("#champion#{idx}_#{property}").html(prop)
 
   updateCharts: () ->

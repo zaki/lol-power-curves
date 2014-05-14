@@ -8,7 +8,8 @@ require './db/seed'
 class Champion
   include DataMapper::Resource
 
-  property :name,  String, key: true
+  property :name,  String, key: true, length: 128
+  property :image, String, length: 255
 
   property :attackdamage         , Float
   property :attackdamageperlevel , Float
@@ -29,10 +30,20 @@ class Champion
   property :attackrange          , Float
   property :movespeed            , Float
 
-  property :q_cd                 , String
-  property :w_cd                 , String
-  property :e_cd                 , String
-  property :r_cd                 , String
+  property :q_img                , String, length: 255
+  property :w_img                , String, length: 255
+  property :e_img                , String, length: 255
+  property :r_img                , String, length: 255
+
+  property :q_cd                 , String, length: 255
+  property :w_cd                 , String, length: 255
+  property :e_cd                 , String, length: 255
+  property :r_cd                 , String, length: 255
+
+  property :q_sc                 , String, length: 255
+  property :w_sc                 , String, length: 255
+  property :e_sc                 , String, length: 255
+  property :r_sc                 , String, length: 255
 end
 #}}}
 
@@ -68,6 +79,11 @@ get "/" do
     ["w_cd"                 , "W CD", false],
     ["e_cd"                 , "E CD", false],
     ["r_cd"                 , "R CD", false],
+
+    ["q_sc"                 , "Q Scaling", false],
+    ["w_sc"                 , "W Scaling", false],
+    ["e_sc"                 , "E Scaling", false],
+    ["r_sc"                 , "R Scaling", false],
   ]
   @charts = {
     "AD"  => [ ["attackdamage", "AD"], ["attackspeed", "AS"], ["dps", "DPS"], ],
