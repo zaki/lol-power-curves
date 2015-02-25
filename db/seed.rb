@@ -41,7 +41,7 @@ class Seed
     @version = champions["version"]
 
     champions["data"].keys.each do |name|
-      champion = Champion.first_or_create(name: name)
+      champion = Champion.first_or_create(name: champions["data"][name]["name"])
       data     = champions["data"][name]
 
       ["attackdamage", "attackdamageperlevel",
@@ -61,6 +61,7 @@ class Seed
 
       spells, current = %w(q w e r), 0
       data["spells"].each do |spell|
+        next if current > 3
         champion.send(:"#{spells[current]}_img=", spell["image"]["full"])
         champion.send(:"#{spells[current]}_cd=",  spell["cooldownBurn"])
         champion.send(:"#{spells[current]}_sc=",  parse_vars(spell["vars"]))
